@@ -1,0 +1,23 @@
+stages:
+  - backup
+
+backup-to-github-job:
+  stage: backup
+  only:
+    - main
+    - dev
+  script:
+    - 'which ssh-agent || (apk add --no-cache openssh-client)'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$GITLAB_SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - git config --global user.email "farhannabilsuryono3@gmail.com"
+    - git config --global user.name "Altair1618"
+    - git remote remove github
+    - git remote add github git@github.com:Altair1618/Customer-Churn-Prediction-Ops-Pipeline.git
+    - git checkout -b $CI_COMMIT_REF_NAME || git checkout $CI_COMMIT_REF_NAME
+    - git fetch github
+    - git push --force github $CI_COMMIT_REF_NAME

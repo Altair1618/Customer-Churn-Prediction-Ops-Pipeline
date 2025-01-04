@@ -1,0 +1,15 @@
+
+# Environment Variables
+.env
+.env.docker
+
+# VSCode
+.vscode
+
+# Logs
+*.log
+logs/
+
+# Python
+__pycache__
+*.pyc
