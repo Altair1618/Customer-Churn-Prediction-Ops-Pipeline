@@ -10,8 +10,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-old_data_path = f"/shared/processed/customer_churn_cleaned_old.csv"
-new_data_path = f"/shared/processed/customer_churn_cleaned_new.csv"
+old_data_path = f"/shared/data/customer_churn_old.csv"
+new_data_path = f"/shared/data/customer_churn_new.csv"
 
 def calculate_psi(expected, actual, buckets=10):
     breakpoints = np.linspace(np.min(expected), np.max(expected), buckets + 1)
@@ -34,7 +34,7 @@ def run_drift_detection():
     
     dag_bag = DagBag()
     
-    data = pd.read_parquet(old_data_path)
+    data = pd.read_csv(old_data_path)
     
     X = data.drop("Churn", axis=1)
     y = data["Churn"]

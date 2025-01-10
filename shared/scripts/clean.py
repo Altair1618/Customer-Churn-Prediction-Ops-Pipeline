@@ -4,7 +4,7 @@ from pyspark.sql.types import IntegerType, FloatType
 
 
 input_path = "/shared/data/customer_churn_old.csv"
-output_path = "/shared/processed/customer_churn_cleaned_old.parquet"
+output_path = "/shared/processed/customer_churn_cleaned.parquet"
 
 def convert_to_binary(datum: str) -> int:
     if datum == 'No':

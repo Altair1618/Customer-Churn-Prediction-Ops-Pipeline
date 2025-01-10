@@ -94,7 +94,7 @@ def generate_normal_data():
     ]
 
 def drift_simulator(data_count):
-    random_column = random.choice(column_values_pair.keys()[:-1])
+    random_column = random.choice(list(column_values_pair.keys())[:-1])
 
     data = []
 
