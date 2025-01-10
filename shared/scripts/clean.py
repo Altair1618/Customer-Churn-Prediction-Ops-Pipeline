@@ -61,6 +61,7 @@ def clean(input_path, output_path):
     for column in trinary_columns:
         data = data.withColumn(column, service_code_udf(col(column)))
 
+    data = data.dropna().dropDuplicates()
     data.write.parquet(output_path, mode="overwrite")
 
 

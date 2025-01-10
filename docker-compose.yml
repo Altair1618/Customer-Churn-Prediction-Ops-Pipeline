@@ -28,6 +28,8 @@ x-airflow-common:
     &airflow-common-depends-on
     postgres:
       condition: service_healthy
+  networks:
+    - customer-churn-network
 
 services:
   postgres:
@@ -44,6 +46,8 @@ services:
       retries: 5
       start_period: 5s
     restart: always
+    networks:
+      - customer-churn-network
 
   airflow-webserver:
     <<: *airflow-common
@@ -191,6 +195,8 @@ services:
     volumes:
       - mlflow-data:/mlflow
       - ./shared:/shared:rw
+    networks:
+      - customer-churn-network
 
   spark-master:
     image: bitnami/spark:3
@@ -206,6 +212,8 @@ services:
     user: "0:0"
     volumes:
       - ./shared:/shared:rw
+    networks:
+      - customer-churn-network
 
   spark-worker:
     image: bitnami/spark:3
@@ -224,7 +232,13 @@ services:
       - ./shared:/shared:rw
     depends_on:
       - spark-master
+    networks:
+      - customer-churn-network
 
 volumes:
   mlflow-data:
   postgres-db-volume:
+
+networks:
+  customer-churn-network:
+    driver: bridge
