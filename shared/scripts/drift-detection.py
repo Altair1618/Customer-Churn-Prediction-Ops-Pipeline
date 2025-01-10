@@ -11,7 +11,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 old_data_path = f"/shared/processed/customer_churn_cleaned_old.parquet"
-new_data_path = f"/shared/processed/customer_churn_cleaned_new.parquet"
+new_data_path = f"/shared/processed/customer_churn_cleaned_new.csv"
 
 def calculate_psi(expected, actual, buckets=10):
     breakpoints = np.linspace(np.min(expected), np.max(expected), buckets + 1)
@@ -42,7 +42,7 @@ def run_drift_detection():
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    new_data = pd.read_parquet(new_data_path)
+    new_data = pd.read_csv(new_data_path)
     new_data = new_data[X_train.columns]
     
     currentTask = dag.get_task("drift_detection_task")
