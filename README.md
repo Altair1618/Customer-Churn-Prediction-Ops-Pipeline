@@ -32,7 +32,7 @@ This is a machine learning pipeline to predict customer churn using Telco user d
 
 2. Build and start the Docker containers:
     ```bash
-    docker-compose up --build
+    docker-compose up -d --build --remove-orphans
     ```
 
 3. Access the Airflow web interface at `http://localhost:8080` with the default credentials:
