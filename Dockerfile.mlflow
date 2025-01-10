@@ -4,7 +4,7 @@ WORKDIR /mlflow
 
 RUN pip install mlflow
 
-ENV BACKEND_URI sqlite:///mlflow.db
+ENV BACKEND_URI=sqlite:///mlflow.db
 
 EXPOSE 5000
 

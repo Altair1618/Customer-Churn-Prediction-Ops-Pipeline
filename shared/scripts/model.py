@@ -26,9 +26,15 @@ def train_model(data_path):
     mlflow.log_metric("accuracy", accuracy)
     mlflow.sklearn.log_model(model, "costumer_churn_model")
 
+    mlflow.sklearn.log_model(
+        sk_model=model,
+        artifact_path="model",
+        registered_model_name="Customer Churn Model"
+    )
+
 
 if __name__ == "__main__":
-    mlflow.set_tracking_uri("http://host.docker.internal:5000")
+    mlflow.set_tracking_uri("http://mlflow-server:5000")
     mlflow.set_experiment("Customer Churn Model Training")
     with mlflow.start_run():
         train_model(data_path)
