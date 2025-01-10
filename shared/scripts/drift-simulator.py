@@ -131,7 +131,8 @@ def drift_simulator(data_count):
         
         with open(OLD_FILE_PATH, 'a') as f:
             f.write('\n')
-            f.write(lines)
+            for line in lines:
+                f.write(line)
     
     with open(NEW_FILE_PATH, 'w', newline='') as f:
         writer = csv.writer(f)
