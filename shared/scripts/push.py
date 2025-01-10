@@ -10,7 +10,7 @@ def push():
     dag = dag_bag.get_dag("churn_pipeline")
     task = dag.get_task("push_task")
     
-    session =  settings.Session()
+    session = settings.Session()
     ti = TaskInstance(task=task, run_id=run_id)
     ti.xcom_push(key="filename", value="haerin")
     
