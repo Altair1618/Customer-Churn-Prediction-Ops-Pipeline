@@ -33,7 +33,6 @@ def run_drift_detection():
     run_id = sys.argv[1]
     
     dag_bag = DagBag()
-    dag = dag_bag.get_dag("churn_pipeline")
     
     data = pd.read_parquet(old_data_path)
     
@@ -42,11 +41,12 @@ def run_drift_detection():
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    new_data = pd.read_parquet(data_path)
+    new_data = pd.read_parquet(new_data_path)
     new_data = new_data[X_train.columns]
 
     dag = dag_bag.get_dag("drift_detection_dag")
     currentTask = dag.get_task("drift_detection_task")
+    session = settings.Session()
 
     # Iterate through numerical columns
     for col in X_train.select_dtypes(include=np.number).columns:
