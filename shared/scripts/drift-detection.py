@@ -55,12 +55,12 @@ def run_drift_detection():
     for col in X_train.select_dtypes(include=np.number).columns:
         psi = calculate_psi(X_train[col].values, new_data[col].values)
         if psi > 0.1: 
-            // send true
+            # send true
             ti = TaskInstance(task=currentTask, run_id=run_id)
             ti.xcom_push(key="psi_result", value="true")
             break
     else:
-        // send false
+        # send false
         ti = TaskInstance(task=currentTask, run_id=run_id)
         ti.xcom_push(key="psi_result", value="false")
     
