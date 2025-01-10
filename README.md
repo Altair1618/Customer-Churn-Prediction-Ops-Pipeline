@@ -42,18 +42,7 @@ This is a machine learning pipeline to predict customer churn using Telco user d
 4. Setup Connection in Admin->Connections->[+] with the following configurations:
 ![](assets/spark_connection.jpg)
 
-## Running Locally
-
-1. Ensure the Docker containers are running:
-    ```bash
-    docker-compose up
-    ```
-
-2. Access the Airflow web interface at `http://localhost:8080`.
-
-3. Trigger the `drift_simulator_dag` to simulate data drift every 5 minutes.
-
-4. The `drift_detection_dag` will run daily to check for data drift and trigger the `model_training_pipeline` if drift is detected.
+5. Trigger the available dags
 
 
 ## Usage
