@@ -3,8 +3,8 @@ from pyspark.sql.functions import col, when, udf
 from pyspark.sql.types import IntegerType, FloatType
 
 
-input_path = "/shared/data/customer_churn.csv"
-output_path = "/shared/processed/customer_churn_cleaned.parquet"
+input_path = "/shared/data/customer_churn_old.csv"
+output_path = "/shared/processed/customer_churn_cleaned_old.parquet"
 
 def convert_to_binary(datum: str) -> int:
     if datum == 'No':
