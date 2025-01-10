@@ -1,4 +1,5 @@
 from pyspark.sql import SparkSession
+from pyspark.ml.feature import StringIndexer
 
 
 input_path = "/shared/data/customer_churn.csv"
@@ -13,8 +14,14 @@ def clean(input_path, output_path):
     
     data = spark.read.csv(input_path, header=True, inferSchema=True)
 
-    data = data.dropna()
-    data = data.dropDuplicates()
+    data = data.drop("customerID")
+    data = data.dropna().dropDuplicates()
+
+    categorical_columns = [col for col, dtype in data.dtypes if dtype == "string"]
+    for col in categorical_columns:
+        indexer = StringIndexer(inputCol=col, outputCol=f"{col}_index")
+        data = indexer.fit(data).transform(data)
+        data = data.drop(col)
 
     data.write.parquet(output_path, mode="overwrite")
 
