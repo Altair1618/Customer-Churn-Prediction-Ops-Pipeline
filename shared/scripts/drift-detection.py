@@ -44,24 +44,31 @@ def run_drift_detection():
     y = data["Churn"]
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    new_data = pd.read_parquet(new_data_path)
+
+    new_data = pd.read_parquet(data_path)
     new_data = new_data[X_train.columns]
-    
-    
+
     currentTask = dag.get_task("drift_detection_task")
-    
+
+    ### TO DELETE
+    ti = TaskInstance(task=currentTask, run_id=run_id)
+    ti.xcom_push(key="psi_result", value="true")
+    ### TO DELETE
+    dag = dag_bag.get_dag("drift_detection_dag")
+
     # Iterate through numerical columns
     for col in X_train.select_dtypes(include=np.number).columns:
         psi = calculate_psi(X_train[col].values, new_data[col].values)
         if psi > 0.1: 
             # send true
             ti = TaskInstance(task=currentTask, run_id=run_id)
+            ti.set_state('success', session)
             ti.xcom_push(key="psi_result", value="true")
             break
     else:
         # send false
         ti = TaskInstance(task=currentTask, run_id=run_id)
+        ti.set_state('success', session)
         ti.xcom_push(key="psi_result", value="false")
     
     
