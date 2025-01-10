@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-old_data_path = f"/shared/processed/customer_churn_cleaned_old.parquet"
+old_data_path = f"/shared/processed/customer_churn_cleaned_old.csv"
 new_data_path = f"/shared/processed/customer_churn_cleaned_new.csv"
 
 def calculate_psi(expected, actual, buckets=10):
@@ -46,7 +46,7 @@ def run_drift_detection():
 
     dag = dag_bag.get_dag("drift_detection_dag")
     currentTask = dag.get_task("drift_detection_task")
-    session = settings.Session()ke 
+    session = settings.Session() 
 
     # Iterate through numerical columns
     for col in X_train.select_dtypes(include=np.number).columns:

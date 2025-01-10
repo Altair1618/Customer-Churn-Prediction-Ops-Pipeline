@@ -72,3 +72,9 @@ with DAG(dag_id='drift_detection_dag', start_date=days_ago(1), schedule_interval
     )
 
     drift_detection_task >> check_drift_task >> [trigger_model_training, no_drift_detected]
+
+with DAG(dag_id='drift_simulator_dag', start_date=days_ago(1), schedule_interval='*/5 * * * *') as dag:
+    simulate_drift = BashOperator(
+        task_id='simulate_drift',
+        bash_command='python /shared/scripts/drift-simulator.py'
+    )

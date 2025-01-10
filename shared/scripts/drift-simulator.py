@@ -1,5 +1,7 @@
 import random
 import csv
+import os
+import string
 
 column_values_pair = {
     'gender': ['Male', 'Female'],
@@ -138,4 +140,5 @@ def drift_simulator(data_count):
 
         writer.writerows(data)
 
-    
+if __name__ == "__main__":
+    drift_simulator(7000)
