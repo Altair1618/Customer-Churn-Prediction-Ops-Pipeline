@@ -48,13 +48,8 @@ def run_drift_detection():
     new_data = pd.read_parquet(data_path)
     new_data = new_data[X_train.columns]
 
-    currentTask = dag.get_task("drift_detection_task")
-
-    ### TO DELETE
-    ti = TaskInstance(task=currentTask, run_id=run_id)
-    ti.xcom_push(key="psi_result", value="true")
-    ### TO DELETE
     dag = dag_bag.get_dag("drift_detection_dag")
+    currentTask = dag.get_task("drift_detection_task")
 
     # Iterate through numerical columns
     for col in X_train.select_dtypes(include=np.number).columns:
