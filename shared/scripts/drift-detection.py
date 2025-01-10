@@ -46,7 +46,7 @@ def run_drift_detection():
 
     dag = dag_bag.get_dag("drift_detection_dag")
     currentTask = dag.get_task("drift_detection_task")
-    session = settings.Session()
+    session = settings.Session()ke 
 
     # Iterate through numerical columns
     for col in X_train.select_dtypes(include=np.number).columns:

@@ -48,7 +48,7 @@ def check_drift(ti):
     else:
         return 'no_drift_detected'
 
-with DAG(dag_id='drift_detection_dag', start_date=days_ago(1), schedule_interval='@daily') as dag:
+with DAG(dag_id='drift_detection_dag', start_date=days_ago(1), schedule_interval='*/5 * * * *') as dag:
     drift_detection_task = BashOperator(
         task_id='drift_detection_task',
         bash_command='python /shared/scripts/drift-detection.py {{ run_id }}',
