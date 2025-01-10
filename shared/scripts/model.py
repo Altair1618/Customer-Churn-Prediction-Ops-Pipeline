@@ -28,6 +28,7 @@ def train_model(data_path):
 
 
 if __name__ == "__main__":
+    mlflow.set_tracking_uri("http://host.docker.internal:5000")
     mlflow.set_experiment("Customer Churn Model Training")
     with mlflow.start_run():
         train_model(data_path)

@@ -19,9 +19,13 @@ def clean(input_path, output_path):
 
     categorical_columns = [col for col, dtype in data.dtypes if dtype == "string"]
     for col in categorical_columns:
-        indexer = StringIndexer(inputCol=col, outputCol=f"{col}_index")
+        indexer = StringIndexer(inputCol=col, outputCol=f"{col}_temp")
         data = indexer.fit(data).transform(data)
         data = data.drop(col)
+
+    for col in data.columns:
+        if col.endswith("_temp"):
+            data = data.withColumnRenamed(col, col[:-5])
 
     data.write.parquet(output_path, mode="overwrite")
 
